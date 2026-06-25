@@ -1,61 +1,55 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import { useGame } from '@/context/game-context';
+import { Spacing } from '@/constants/theme';
+import { useTheme } from '@/hooks/use-theme';
 
 export default function HomeScreen() {
+  const router = useRouter();
+  const theme = useTheme();
+  const { resetGame } = useGame();
+
+  const handlePlay = () => {
+    resetGame();
+    router.push('/setup/player-count');
+  };
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
-
-        <ThemedText type="code" style={styles.code}>
-          get started
+        <ThemedText type="title" style={styles.title}>
+          Timesup
         </ThemedText>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        <ThemedView style={styles.center}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.button,
+              { backgroundColor: theme.backgroundElement },
+              pressed && styles.buttonPressed,
+            ]}
+            onPress={handlePlay}>
+            <ThemedText type="subtitle">Jouer</ThemedText>
+          </Pressable>
 
-        {Platform.OS === 'web' && <WebBadge />}
+          {__DEV__ ? (
+            <Pressable
+              style={({ pressed }) => [
+                styles.devButton,
+                { backgroundColor: theme.backgroundElement },
+                pressed && styles.buttonPressed,
+              ]}
+              onPress={() => router.push('/dev')}>
+              <ThemedText type="small" themeColor="textSecondary">
+                Mode développeur
+              </ThemedText>
+            </Pressable>
+          ) : null}
+        </ThemedView>
       </SafeAreaView>
     </ThemedView>
   );
@@ -64,35 +58,34 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
   },
   safeArea: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
   },
   title: {
     textAlign: 'center',
+    marginTop: Spacing.six,
   },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
+  },
+  devButton: {
+    paddingHorizontal: Spacing.four,
+    paddingVertical: Spacing.two,
+    borderRadius: Spacing.three,
+    alignItems: 'center',
+  },
+  button: {
+    paddingHorizontal: Spacing.six,
     paddingVertical: Spacing.four,
     borderRadius: Spacing.four,
+    minWidth: 200,
+    alignItems: 'center',
+  },
+  buttonPressed: {
+    opacity: 0.7,
   },
 });
