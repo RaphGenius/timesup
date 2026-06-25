@@ -1,5 +1,7 @@
 export type Team = 1 | 2;
 
+export type StartingTeamChoice = Team | 'random';
+
 export type Player = {
   id: string;
   name: string;

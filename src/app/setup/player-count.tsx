@@ -28,7 +28,7 @@ export default function PlayerCountScreen() {
     <ScreenLayout
       title="Nombre de joueurs"
       subtitle={`Entre ${minPlayers} et ${maxPlayers} joueurs`}
-      footer={<PrimaryButton label="Suivant" onPress={handleNext} />}>
+      footer={<PrimaryButton label="Valider" onPress={handleNext} />}>
       <ThemedView style={styles.counter}>
         <Pressable
           style={({ pressed }) => [
@@ -60,15 +60,14 @@ export default function PlayerCountScreen() {
 
 const styles = StyleSheet.create({
   counter: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: Spacing.five,
   },
   counterButton: {
-    width: 64,
-    height: 64,
+    width: 56,
+    height: 56,
     borderRadius: Spacing.three,
     alignItems: 'center',
     justifyContent: 'center',

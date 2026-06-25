@@ -53,12 +53,15 @@ export default function DevMenuScreen() {
 
 const styles = StyleSheet.create({
   list: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: Spacing.two,
-    paddingBottom: Spacing.four,
+    paddingBottom: Spacing.two,
   },
   item: {
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.three,
+    width: '48%',
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.two,
     borderRadius: Spacing.three,
     gap: Spacing.one,
   },

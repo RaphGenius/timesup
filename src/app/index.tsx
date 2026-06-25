@@ -21,34 +21,36 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <ThemedText type="title" style={styles.title}>
-          Timesup
-        </ThemedText>
+        <ThemedView style={styles.page}>
+          <ThemedText type="title" style={styles.title}>
+            Timesup
+          </ThemedText>
 
-        <ThemedView style={styles.center}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.button,
-              { backgroundColor: theme.backgroundElement },
-              pressed && styles.buttonPressed,
-            ]}
-            onPress={handlePlay}>
-            <ThemedText type="subtitle">Jouer</ThemedText>
-          </Pressable>
-
-          {__DEV__ ? (
+          <ThemedView style={styles.actions}>
             <Pressable
               style={({ pressed }) => [
-                styles.devButton,
+                styles.button,
                 { backgroundColor: theme.backgroundElement },
                 pressed && styles.buttonPressed,
               ]}
-              onPress={() => router.push('/dev')}>
-              <ThemedText type="small" themeColor="textSecondary">
-                Mode développeur
-              </ThemedText>
+              onPress={handlePlay}>
+              <ThemedText type="subtitle">Jouer</ThemedText>
             </Pressable>
-          ) : null}
+
+            {__DEV__ ? (
+              <Pressable
+                style={({ pressed }) => [
+                  styles.devButton,
+                  { backgroundColor: theme.backgroundElement },
+                  pressed && styles.buttonPressed,
+                ]}
+                onPress={() => router.push('/dev')}>
+                <ThemedText type="small" themeColor="textSecondary">
+                  Mode développeur
+                </ThemedText>
+              </Pressable>
+            ) : null}
+          </ThemedView>
         </ThemedView>
       </SafeAreaView>
     </ThemedView>
@@ -62,11 +64,16 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
+  page: {
+    flex: 1,
+    paddingHorizontal: Spacing.four,
+    paddingVertical: Spacing.three,
+  },
   title: {
     textAlign: 'center',
-    marginTop: Spacing.six,
+    paddingTop: Spacing.two,
   },
-  center: {
+  actions: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

@@ -1,4 +1,0 @@
-Dans choix des mots, on clique à droite pour faire le mot suivant et à gauche pour revenir au précedent
-Mode aveugle : Des mots sont chosiis aléatoirement parmis une liste 
-Pouvoir ajouter la maniere dont on fait devenir les mots 
-Rajouter une pause en cours de partie

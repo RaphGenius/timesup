@@ -23,6 +23,7 @@ import {
 } from '@/lib/game-engine';
 import {
   createPlayer,
+  DEFAULT_METHODS,
   MAX_PLAYERS,
   MIN_PLAYERS,
   type PlayState,
@@ -32,7 +33,7 @@ import {
 } from '@/types/game';
 
 type PlayAction =
-  | { type: 'INIT'; players: Player[] }
+  | { type: 'INIT'; players: Player[]; startingTeam: Team }
   | { type: 'START_COUNTDOWN' }
   | { type: 'TICK_COUNTDOWN' }
   | { type: 'TICK_TURN' }
@@ -45,7 +46,7 @@ type PlayAction =
 function playReducer(state: PlayState | null, action: PlayAction): PlayState | null {
   switch (action.type) {
     case 'INIT':
-      return initPlayState(action.players);
+      return initPlayState(action.players, DEFAULT_METHODS, action.startingTeam);
     case 'START_COUNTDOWN':
       return state ? startCountdown(state) : state;
     case 'TICK_COUNTDOWN':
@@ -74,7 +75,7 @@ type GameContextValue = {
   setPlayerName: (index: number, name: string) => void;
   setPlayerTeam: (playerId: string, team: Team) => void;
   setPlayerWords: (playerId: string, words: string[]) => void;
-  startGame: () => void;
+  startGame: (startingTeam: Team) => void;
   startCountdown: () => void;
   tickCountdown: () => void;
   tickTurn: () => void;
@@ -122,8 +123,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     );
   }, []);
 
-  const startGame = useCallback(() => {
-    dispatchPlay({ type: 'INIT', players });
+  const startGame = useCallback((startingTeam: Team) => {
+    dispatchPlay({ type: 'INIT', players, startingTeam });
   }, [players]);
 
   const handleStartCountdown = useCallback(() => {

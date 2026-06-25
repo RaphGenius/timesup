@@ -58,9 +58,12 @@ export default function PlayerNamesScreen() {
 
 const styles = StyleSheet.create({
   list: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: Spacing.three,
   },
   row: {
+    width: '47%',
     gap: Spacing.one,
   },
 });

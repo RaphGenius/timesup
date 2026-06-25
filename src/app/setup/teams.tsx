@@ -97,16 +97,19 @@ const styles = StyleSheet.create({
   },
   badge: {
     flex: 1,
-    padding: Spacing.three,
+    padding: Spacing.two,
     borderRadius: Spacing.two,
     alignItems: 'center',
     gap: Spacing.one,
   },
   list: {
-    gap: Spacing.three,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.two,
   },
   playerRow: {
-    gap: Spacing.two,
+    width: '48%',
+    gap: Spacing.one,
   },
   playerName: {
     fontWeight: '600',

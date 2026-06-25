@@ -83,9 +83,13 @@ export default function WordsScreen() {
 
 const styles = StyleSheet.create({
   list: {
-    gap: Spacing.three,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.two,
   },
   row: {
+    width: '31%',
+    minWidth: 140,
     gap: Spacing.one,
   },
 });

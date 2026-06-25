@@ -6,6 +6,7 @@ import {
   type Player,
   type PlayState,
   type RoundMethod,
+  type StartingTeamChoice,
   type Team,
   type WordEntry,
 } from '@/types/game';
@@ -64,10 +65,21 @@ export function advanceTeam(currentTeam: Team): Team {
   return currentTeam === 1 ? 2 : 1;
 }
 
-export function initPlayState(players: Player[], methods: RoundMethod[] = DEFAULT_METHODS): PlayState {
+export function resolveStartingTeam(choice: StartingTeamChoice): Team {
+  if (choice === 'random') {
+    return Math.random() < 0.5 ? 1 : 2;
+  }
+  return choice;
+}
+
+export function initPlayState(
+  players: Player[],
+  methods: RoundMethod[] = DEFAULT_METHODS,
+  startingTeam: Team = 1,
+): PlayState {
   const allWords = shuffleWords(buildWordPool(players));
-  const team1Players = getTeamPlayers(players, 1);
-  const activePlayer = team1Players[0] ?? players[0];
+  const startingTeamPlayers = getTeamPlayers(players, startingTeam);
+  const activePlayer = startingTeamPlayers[0] ?? players[0];
 
   return {
     phase: 'pre-turn',
@@ -76,7 +88,7 @@ export function initPlayState(players: Player[], methods: RoundMethod[] = DEFAUL
     allWords,
     remainingWords: allWords,
     currentWord: null,
-    activeTeam: 1,
+    activeTeam: startingTeam,
     activePlayerId: activePlayer.id,
     teamTurnIndex: { 1: 0, 2: 0 },
     scores: { 1: 0, 2: 0 },

@@ -21,20 +21,15 @@ export function ScreenLayout({
   style,
   ...rest
 }: ScreenLayoutProps) {
-  const content = (
-    <>
-      {title ? (
-        <ThemedText type="subtitle" style={styles.title}>
-          {title}
-        </ThemedText>
-      ) : null}
-      {subtitle ? (
-        <ThemedText themeColor="textSecondary" style={styles.subtitle}>
-          {subtitle}
-        </ThemedText>
-      ) : null}
+  const body = scrollable ? (
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps="handled">
       {children}
-    </>
+    </ScrollView>
+  ) : (
+    <ThemedView style={styles.content}>{children}</ThemedView>
   );
 
   return (
@@ -43,16 +38,26 @@ export function ScreenLayout({
         <KeyboardAvoidingView
           style={styles.flex}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-          {scrollable ? (
-            <ScrollView
-              contentContainerStyle={styles.scrollContent}
-              keyboardShouldPersistTaps="handled">
-              {content}
-            </ScrollView>
-          ) : (
-            <ThemedView style={styles.content}>{content}</ThemedView>
-          )}
-          {footer ? <ThemedView style={styles.footer}>{footer}</ThemedView> : null}
+          <ThemedView style={styles.page}>
+            {title || subtitle ? (
+              <ThemedView style={styles.header}>
+                {title ? (
+                  <ThemedText type="subtitle" style={styles.title}>
+                    {title}
+                  </ThemedText>
+                ) : null}
+                {subtitle ? (
+                  <ThemedText themeColor="textSecondary" type="small" style={styles.subtitle}>
+                    {subtitle}
+                  </ThemedText>
+                ) : null}
+              </ThemedView>
+            ) : null}
+
+            {body}
+
+            {footer ? <ThemedView style={styles.footer}>{footer}</ThemedView> : null}
+          </ThemedView>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </ThemedView>
@@ -69,29 +74,40 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  content: {
+  page: {
     flex: 1,
     paddingHorizontal: Spacing.four,
-    paddingTop: Spacing.five,
-    gap: Spacing.three,
+    paddingVertical: Spacing.three,
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingHorizontal: Spacing.four,
-    paddingTop: Spacing.five,
+  header: {
+    alignItems: 'center',
+    gap: Spacing.one,
+    paddingTop: Spacing.two,
     paddingBottom: Spacing.three,
-    gap: Spacing.three,
   },
   title: {
     textAlign: 'center',
   },
   subtitle: {
     textAlign: 'center',
-    marginBottom: Spacing.two,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: Spacing.three,
+  },
+  scroll: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    gap: Spacing.three,
+    paddingBottom: Spacing.two,
   },
   footer: {
-    paddingHorizontal: Spacing.four,
-    paddingBottom: Spacing.four,
-    paddingTop: Spacing.two,
+    alignItems: 'center',
+    paddingTop: Spacing.three,
+    paddingBottom: Spacing.two,
   },
 });
