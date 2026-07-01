@@ -108,41 +108,6 @@ function ProgressBar({
   );
 }
 
-function VoiceHelpButton() {
-  const theme = useTheme();
-  const [showHelp, setShowHelp] = useState(false);
-
-  return (
-    <View style={styles.helpAnchor}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Aide sur l'enregistrement vocal"
-        onPress={() => setShowHelp((value) => !value)}
-        style={({ pressed }) => [
-          styles.helpButton,
-          { backgroundColor: theme.backgroundElement },
-          pressed && styles.pressed,
-        ]}>
-        <ThemedText type="smallBold" themeColor="textSecondary">
-          ?
-        </ThemedText>
-      </Pressable>
-
-      {showHelp ? (
-        <View
-          style={[
-            styles.popover,
-            { backgroundColor: theme.backgroundElement, borderColor: theme.backgroundSelected },
-          ]}>
-          <ThemedText type="small" style={styles.popoverText}>
-            Ton enregistrement sera joué automatiquement quand ce sera ton tour de jouer.
-          </ThemedText>
-        </View>
-      ) : null}
-    </View>
-  );
-}
-
 function DeleteVoiceButton({ onPress, disabled }: { onPress: () => void; disabled?: boolean }) {
   const theme = useTheme();
 
@@ -328,10 +293,10 @@ export function PlayerVoiceControlsInner({
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.titleRow}>
-        <ThemedText type="smallBold">Voix</ThemedText>
-        <VoiceHelpButton />
-      </View>
+      <ThemedText type="smallBold">Voix</ThemedText>
+      <ThemedText themeColor="textSecondary" type="small" style={styles.hint}>
+        Ton enregistrement sera joué automatiquement quand ce sera ton tour de jouer.
+      </ThemedText>
 
       <View style={styles.row}>
         {voiceUri && !recorderState.isRecording ? (
@@ -377,12 +342,11 @@ export function PlayerVoiceControlsInner({
 
 const styles = StyleSheet.create({
   wrapper: {
-    gap: Spacing.one,
+    gap: Spacing.two,
   },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.one,
+  hint: {
+    fontSize: 11,
+    lineHeight: 14,
   },
   row: {
     flexDirection: 'row',
@@ -426,34 +390,6 @@ const styles = StyleSheet.create({
   progressFill: {
     height: '100%',
     borderRadius: 3,
-  },
-  helpAnchor: {
-    position: 'relative',
-    zIndex: 10,
-  },
-  helpButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  popover: {
-    position: 'absolute',
-    left: 0,
-    top: 32,
-    width: 220,
-    padding: Spacing.two,
-    borderRadius: Spacing.two,
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  popoverText: {
-    textAlign: 'center',
   },
   pressed: {
     opacity: 0.7,
