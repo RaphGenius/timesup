@@ -7,6 +7,7 @@ export type Player = {
   name: string;
   team: Team | null;
   words: string[];
+  voiceUri: string | null;
 };
 
 export type WordEntry = {
@@ -39,7 +40,7 @@ export type PlayState = {
   turnTimeLeft: number;
 };
 
-export const WORDS_PER_PLAYER = 5;
+export const WORDS_PER_PLAYER = 10;
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 20;
 export const COUNTDOWN_SECONDS = 3;
@@ -50,7 +51,7 @@ export const DEFAULT_METHODS: RoundMethod[] = [
   {
     id: 'description',
     label: 'Description',
-    instruction: 'Faites deviner en décrivant librement',
+    instruction: 'Faites deviner en décrivant librement sans dire le mot exact',
     isDefault: true,
   },
   {
@@ -77,5 +78,6 @@ export function createPlayer(id: string): Player {
     name: '',
     team: null,
     words: createEmptyWords(),
+    voiceUri: null,
   };
 }

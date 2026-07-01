@@ -35,6 +35,12 @@
             "imageWidth": 76
           }
         }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Autorisez $(PRODUCT_NAME) à enregistrer le nom des joueurs."
+        }
       ]
     ],
     "experiments": {

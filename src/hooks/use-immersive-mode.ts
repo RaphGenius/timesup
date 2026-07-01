@@ -1,8 +1,9 @@
 import { useFocusEffect } from 'expo-router';
-import { NavigationBar } from 'expo-navigation-bar';
 import { StatusBar } from 'expo-status-bar';
 import { Platform } from 'react-native';
 import { useCallback } from 'react';
+
+import { setNavigationBarHidden } from '@/lib/navigation-bar';
 
 export function useImmersiveMode() {
   useFocusEffect(
@@ -10,14 +11,14 @@ export function useImmersiveMode() {
       StatusBar.setHidden(true, 'fade');
 
       if (Platform.OS === 'android') {
-        NavigationBar.setHidden(true);
+        setNavigationBarHidden(true);
       }
 
       return () => {
         StatusBar.setHidden(false, 'fade');
 
         if (Platform.OS === 'android') {
-          NavigationBar.setHidden(false);
+          setNavigationBarHidden(false);
         }
       };
     }, []),

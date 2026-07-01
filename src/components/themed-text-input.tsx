@@ -1,13 +1,18 @@
+import { forwardRef } from 'react';
 import { StyleSheet, TextInput, type TextInputProps } from 'react-native';
 
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
-export function ThemedTextInput({ style, placeholderTextColor, ...rest }: TextInputProps) {
+export const ThemedTextInput = forwardRef<TextInput, TextInputProps>(function ThemedTextInput(
+  { style, placeholderTextColor, ...rest },
+  ref,
+) {
   const theme = useTheme();
 
   return (
     <TextInput
+      ref={ref}
       style={[
         styles.input,
         {
@@ -21,7 +26,7 @@ export function ThemedTextInput({ style, placeholderTextColor, ...rest }: TextIn
       {...rest}
     />
   );
-}
+});
 
 const styles = StyleSheet.create({
   input: {

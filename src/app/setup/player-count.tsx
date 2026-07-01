@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 
@@ -21,7 +21,7 @@ export default function PlayerCountScreen() {
 
   const handleNext = () => {
     initPlayers(count);
-    router.push('/setup/player-names');
+    router.replace('/setup/player/0' as Href);
   };
 
   return (

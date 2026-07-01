@@ -1,5 +1,14 @@
 import { Stack } from 'expo-router';
 
 export default function SetupLayout() {
-  return <Stack screenOptions={{ headerShown: false, orientation: 'portrait' }} />;
+  return (
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        orientation: 'portrait',
+        gestureEnabled: false,
+        animation: 'fade',
+      }}
+    />
+  );
 }

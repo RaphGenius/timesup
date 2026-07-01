@@ -75,6 +75,7 @@ type GameContextValue = {
   setPlayerName: (index: number, name: string) => void;
   setPlayerTeam: (playerId: string, team: Team) => void;
   setPlayerWords: (playerId: string, words: string[]) => void;
+  setPlayerVoice: (playerId: string, voiceUri: string | null) => void;
   startGame: (startingTeam: Team) => void;
   startCountdown: () => void;
   tickCountdown: () => void;
@@ -120,6 +121,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const setPlayerWords = useCallback((playerId: string, words: string[]) => {
     setPlayers((current) =>
       current.map((player) => (player.id === playerId ? { ...player, words } : player)),
+    );
+  }, []);
+
+  const setPlayerVoice = useCallback((playerId: string, voiceUri: string | null) => {
+    setPlayers((current) =>
+      current.map((player) => (player.id === playerId ? { ...player, voiceUri } : player)),
     );
   }, []);
 
@@ -183,6 +190,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setPlayerName,
       setPlayerTeam,
       setPlayerWords,
+      setPlayerVoice,
       startGame,
       startCountdown: handleStartCountdown,
       tickCountdown: handleTickCountdown,
@@ -205,6 +213,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setPlayerName,
       setPlayerTeam,
       setPlayerWords,
+      setPlayerVoice,
       startGame,
       handleStartCountdown,
       handleTickCountdown,

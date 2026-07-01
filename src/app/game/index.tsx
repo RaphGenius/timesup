@@ -1,8 +1,11 @@
 import { useRouter, type Href } from 'expo-router';
 import { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import { GamePhaseView } from '@/components/game/game-phase-view';
+import { QuitGameButton } from '@/components/game/quit-game-button';
 import { useGame } from '@/context/game-context';
+import { usePlayerVoicePlayback } from '@/hooks/use-player-voice-playback';
 
 export default function GameScreen() {
   const router = useRouter();
@@ -57,6 +60,8 @@ export default function GameScreen() {
     return () => clearInterval(interval);
   }, [playState?.phase, isPaused, tickTurn]);
 
+  usePlayerVoicePlayback(playState?.phase, playState?.activePlayerId, activePlayer?.voiceUri);
+
   if (!playState || !currentMethod) {
     return null;
   }
@@ -67,17 +72,26 @@ export default function GameScreen() {
   };
 
   return (
-    <GamePhaseView
-      playState={playState}
-      activePlayer={activePlayer}
-      currentMethod={currentMethod}
-      onStartCountdown={startCountdown}
-      onWordFound={wordFound}
-      onWordSkipped={wordSkipped}
-      onNextRound={nextRound}
-      onBackHome={handleBackHome}
-      isPaused={isPaused}
-      onTogglePause={() => setIsPaused((value) => !value)}
-    />
+    <View style={styles.screen}>
+      <GamePhaseView
+        playState={playState}
+        activePlayer={activePlayer}
+        currentMethod={currentMethod}
+        onStartCountdown={startCountdown}
+        onWordFound={wordFound}
+        onWordSkipped={wordSkipped}
+        onNextRound={nextRound}
+        onBackHome={handleBackHome}
+        isPaused={isPaused}
+        onTogglePause={() => setIsPaused((value) => !value)}
+      />
+      <QuitGameButton onConfirm={handleBackHome} />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+});

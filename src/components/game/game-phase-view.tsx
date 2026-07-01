@@ -147,6 +147,10 @@ export function GamePhaseView({
         <ThemedText themeColor="textSecondary" style={styles.centerText}>
           Équipe {playState.activeTeam}
         </ThemedText>
+        <ThemedText themeColor="textSecondary" style={styles.centerText}>
+          {playState.remainingWords.length} mot{playState.remainingWords.length > 1 ? 's' : ''}{' '}
+          restant{playState.remainingWords.length > 1 ? 's' : ''}
+        </ThemedText>
       </ThemedView>
     </GameLandscapeLayout>
   );

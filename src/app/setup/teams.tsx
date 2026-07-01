@@ -25,7 +25,7 @@ export default function TeamsScreen() {
   const allAssigned = players.length > 0 && players.every((player) => player.team !== null);
 
   const handleNext = () => {
-    router.push('/setup/words');
+    router.replace('/setup/ready');
   };
 
   if (players.length === 0) {

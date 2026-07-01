@@ -67,24 +67,28 @@ export const DEV_PLAYERS: Player[] = [
     name: 'Alice',
     team: 1,
     words: ['Tour Eiffel AAAAAAAAA AZEAZEZAE ', 'Baguette', 'Fromage', 'Lyon', 'Marseille'],
+    voiceUri: null,
   },
   {
     id: '1',
     name: 'Bob',
     team: 1,
     words: ['Paris', 'Vin', 'Bordeaux', 'Nice', 'Strasbourg'],
+    voiceUri: null,
   },
   {
     id: '2',
     name: 'Claire',
     team: 2,
     words: ['Croissant', 'Bretagne', 'Normandie', 'Toulouse', 'Nantes'],
+    voiceUri: null,
   },
   {
     id: '3',
     name: 'David',
     team: 2,
     words: ['Côte d\'Azur', 'Mont Blanc', 'Loire', 'Seine', 'Camembert'],
+    voiceUri: null,
   },
 ];
 
